@@ -156,7 +156,7 @@ def conv_graphe(graphe):
 ################################# MAIN #################################
 
 #les éléments sont commenter pour simplifier les tests
-#menu()
+menu()
 #parser()
 #print(conv_graphe(fichier("graphe.txt")))
 
