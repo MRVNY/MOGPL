@@ -143,7 +143,7 @@ def conv_graphe(graphe):
 
     #on ajoute les arc simple, ceux lier d'un meme point a un autre
     for i in range(len(sommet_prime)-1):
-        if(sommet_prime[i][0] == sommet_prime[i+1][0]):
+        if(sommet_prime[i][0] == sommet_prime[i+1][0] and sommet_prime[i][1] != sommet_prime[i+1][1]):
             arc_prime.append((sommet_prime[i], sommet_prime[i+1],0))
     
     #on complète les arc avec le reste des arcs de sommet du premier graphe
@@ -154,7 +154,46 @@ def conv_graphe(graphe):
 
 ################################# ALGORITHME DE CALCUL #################################
 
+def alph(s):
+    return s[0]
 
+def chemin_plus_rapide(graphe,debut,arrive):
+    nb_sommet,nb_arc,sommet,arc = graphe
+
+    #recherche du premier sommet
+    sommet.sort(key=alph)
+    tmp = 0
+    for i in sommet:
+        if i[0] == debut:
+            tmp = sommet.index(i)
+            break
+    som_courant = sommet[tmp]
+
+    #tant que l'on arrive pas à la fin on passe a l'arc suivant      
+    return CPR(arc,sommet,som_courant,arrive)
+
+def CPR(arc,sommet,current,arr):
+    if current[0] == arr:
+        return current
+    else:
+        #on cherche les prochain sommets disponibles grace aux arcs
+        next_sommet = []
+        for a in arc:
+            if a[0] == current:
+                next_sommet.append(a[1])
+        if(len(next_sommet)==0):#si il n'y a plus de sommet dispo retourne false pour signifier la fermeture du chemin
+            return False
+        
+        R = []
+        for s in next_sommet:
+            r = CPR(arc,sommet,s,arr)
+            R.append(r)
+        R = list(filter((False).__ne__, R))
+
+        if(len(R)==0):
+            return False
+        
+        return R
 
 ################################# MAIN #################################
 
@@ -166,9 +205,12 @@ def conv_graphe(graphe):
 #graphe_aléatoire = generate_graphe()
 
 #ATTENTION ! Ne fonctionne pas sans Graphviz
-aff_graphe(fichier("graphe_complexe.txt"))
+#aff_graphe(fichier("graphe_complexe.txt"))
+aff_graphe(conv_graphe(fichier("graphe_complexe.txt")))
 #aff_graphe(conv_graphe(fichier("graphe.txt")))
 
 #print(graphe_aléatoire)
 #aff_graphe(graphe_aléatoire)
 #aff_graphe(conv_graphe(graphe_aléatoire))
+
+#print(chemin_plus_rapide(conv_graphe(fichier("graphe_complexe.txt")),"A","G"))
