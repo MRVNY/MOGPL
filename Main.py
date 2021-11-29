@@ -1,7 +1,9 @@
 import numpy as np
 import sys 
 import graphviz
+import re
 from Affichage import aff_graphe
+from Generate import generate_graphe
 
 ################################# RECUPERATION GRAPHE #################################
 
@@ -73,8 +75,9 @@ def fichier(filename):
     arc = []
     for a in range (nbArcs):
         tmp = file.readline()
-
-        arc.append((str(tmp[1]),str(tmp[3]),int(tmp[5]),int(tmp[7])))
+        t = re.findall("^.{5}(\d*)",tmp)
+        l = re.findall("(\d*)\)$",tmp)
+        arc.append((str(tmp[1]),str(tmp[3]),int(t[0]),int(l[0])))
     
     #vérification du graphe
     allsom = []
@@ -156,9 +159,16 @@ def conv_graphe(graphe):
 ################################# MAIN #################################
 
 #les éléments sont commenter pour simplifier les tests
-menu()
+#menu()
 #parser()
 #print(conv_graphe(fichier("graphe.txt")))
+#génere un graphe aléatoire 
+#graphe_aléatoire = generate_graphe()
 
 #ATTENTION ! Ne fonctionne pas sans Graphviz
+aff_graphe(fichier("graphe_complexe.txt"))
 #aff_graphe(conv_graphe(fichier("graphe.txt")))
+
+#print(graphe_aléatoire)
+#aff_graphe(graphe_aléatoire)
+#aff_graphe(conv_graphe(graphe_aléatoire))
