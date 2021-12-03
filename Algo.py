@@ -77,6 +77,27 @@ def simple_graph(G):
         arc_simple[i] = (sommet.index(arc[i][0]),sommet.index(arc[i][1]),arc[i][2])
     return [nb_som,nb_arc,sommet_simple,arc_simple]
 
+# Type I : Chemin d’arrivée au plus tôt
+def type1(graphe,start,end):
+    """on cherche le sommet de y, avec la plus petit chiffre"""
+    return 0
+
+# Type II : Chemin de départ au plus tard
+def type2(graphe,start,end):
+    """on cherche le sommet de x, avec la plus grand chiffre"""
+
+# Type III : Chemin le plus rapide
+def type3(graphe,start,end):
+    """
+    On cherche tous les sommets de x et on les met dans X
+    On cherche tous les sommets de y et on les met dans Y
+
+    pour chaque sommet dans X:
+        On suit les chemins jusqu'a où atteint un sommet de Y, on les met dans une liste C, sinon on abandonne, 
+    On compare dans C la plus petite difference entre le chiffre de la fin et le chiffre du depart
+    """
+
+# Type IV : Plus court chemin
 def type4(graphe,départ,arrivé):
     """Permet de calculer le chemin le plus rapide de Type IV"""
     som, arc = graphe[2], graphe[3]

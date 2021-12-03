@@ -168,7 +168,7 @@ def conv_graphe(graphe):
 #parser()
 #print(conv_graphe(fichier("graphe.txt")))
 #génere un graphe aléatoire 
-#graphe_aléatoire = generate_graphe()
+graphe_aléatoire = generate_graphe()
 
 #ATTENTION ! Ne fonctionne pas sans Graphviz
 #aff_graphe(fichier("graphe_complexe.txt"))
@@ -182,5 +182,6 @@ def conv_graphe(graphe):
 #print(chemin_plus_rapide(conv_graphe(fichier("graphe_complexe.txt")),"A","G"))
 #print(Ford_Bellman(simple_graph(conv_graphe(fichier("graphe_complexe.txt"))),0))
 
+aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
 
-type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+type4(conv_graphe(fichier("graphe.txt")),"A","F")
