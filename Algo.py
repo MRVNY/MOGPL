@@ -39,55 +39,37 @@ def CPR(arc,sommet,current,arr):
         
         return R"""
 
-def Ford_Bellman(G,source):
-    """
-    Algorithme de Ford Bellman
-    Attention source est l'indice dans arc de notre point de start
-    """
-    nb_sommets, nb_arc, sommet, arc = G
-    distance = [float("Inf")] * nb_sommets
-    distance[source] = 0
-    chemin = [None] * nb_sommets
-    chemin[source] = None
+# def Ford_Bellman2(G,source):
+#     """
+#     Algorithme de Ford Bellman
+#     Attention source est l'indice dans arc de notre point de start
+#     """
+#     nb_sommets, nb_arc, sommet, arc = G
+#     distance = [float("Inf")] * nb_sommets
+#     distance[source] = 0
+#     chemin = [None] * nb_sommets
+#     chemin[source] = None
 
-    for _ in range(nb_sommets - 1):
-        for a, b, c in arc:
-            if distance[a] != float("Inf") and distance[a] + c < distance[b]:
-                distance[b] = distance[a] + c
-                chemin[b] = a
+#     for _ in range(nb_sommets - 1):
+#         for a, b, c in arc:
+#             if distance[a] != float("Inf") and distance[a] + c < distance[b]:
+#                 distance[b] = distance[a] + c
+#                 chemin[b] = a
 
-    for a, b, c in arc:
-        if distance[a] != float("Inf") and distance[a] + c < distance[b]:
-            print("Le graphe contient un circuit absorbant")
-            return
+#     for a, b, c in arc:
+#         if distance[a] != float("Inf") and distance[a] + c < distance[b]:
+#             print("Le graphe contient un circuit absorbant")
+#             return
         
-    print(chemin)
-    return distance, chemin
+#     return distance, chemin
 
-def if_Existe_Chemin(graphe,start,end):
-    """
-    (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
-    verifier s'il existe un chemin entre start et end
-    """
-    arcs = graphe[3]
-    todo = [start]
-    
-    while todo != []:
-        tmp = todo.pop()
-        for sFrom, sTo, _ in arcs:
-            if sTo == end:
-                return True
-            if sFrom==tmp:
-                todo.append(sTo)
-    return False
-    
-def chercher_Chemin(graphe, start, end):
+def Ford_Bellman(graphe, sStart):
     """
     (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
     """
     nb_sommets, _, sommets, arcs = graphe
     distance = [float("Inf")] * nb_sommets
-    distance[start[1]] = 0
+    distance[sommets.index(sStart)] = 0
     chemin = [None] * nb_sommets
 
     for _ in range(nb_sommets - 1):
@@ -97,19 +79,48 @@ def chercher_Chemin(graphe, start, end):
             if distance[numFrom] != float("Inf") and distance[numFrom] + sDist < distance[numTo]:
                 distance[numTo] = distance[numFrom] + sDist
                 chemin[numTo] = sFrom
-                if sTo == end:
-                    print(chemin)
-                    tmp = end
-                    out = [tmp[0]]
-                    while tmp != None:
-                        if out[-1] != tmp[0]: 
-                            out.append(tmp[0])
-                        tmp = chemin[sommets.index(tmp)]
-                    if out[-1] != start[0]: 
-                        out.append(start[0])
-                    out.reverse()
-                    return out
-    return []
+                
+    for sFrom, sTo, sDist in arcs:
+        numFrom = sommets.index(sFrom)
+        numTo = sommets.index(sTo)
+        if distance[numFrom] != float("Inf") and distance[numFrom] + sDist < distance[numTo]:
+            print("Le graphe contient un circuit absorbant")
+            return
+    return distance, chemin
+                
+    
+def tracer_Chemin(graphe,sStart,sEnd,chemin):
+    sommets = graphe[2]
+    tmp = sEnd
+    out = [tmp[0]]
+    
+    while tmp != None:
+        if out[-1] != tmp[0]: 
+            out.append(tmp[0])
+        tmp = chemin[sommets.index(tmp)]
+    if out[-1] != sStart[0]: 
+        out.append(sStart[0])
+    out.reverse()
+    
+    return out
+
+# def if_Existe_Chemin(graphe,sStart,sEnd):
+#     """
+#     (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
+#     verifier s'il existe un chemin entre start et end
+#     """
+#     arcs = graphe[3]
+#     todo = [sStart]
+    
+#     while todo != []:
+#         tmp = todo.pop()
+#         for sFrom, sTo, _ in arcs:
+#             if sTo == sEnd:
+#                 return True
+#             if sFrom==tmp:
+#                 todo.append(sTo)
+#     return False
+    
     
 def simple_graph(G):
     """Permet de simplifier les graphiques ( convertir les sommets en entier) """
@@ -131,18 +142,21 @@ def type1(graphe,start,end):
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
     on cherche le sommet de y, avec la plus petit chiffre
     """
-    sommets, arcs = graphe[2], graphe[3]
-    ends = []
-    starts = []
+    sommets = graphe[2]
+    sEnds = []
+    sStarts = []
     for s in sommets:
         if s[0] == end:
-            ends.append(s)
-        if s[0] == start and starts==[]:
-            starts.append(s)
+            sEnds.append(s)
+        if s[0] == start and sStarts==[]:
+            sStarts.append(s)
 
-    for s in ends:
-        if if_Existe_Chemin(graphe,starts[0],s):
-            print(chercher_Chemin(graphe,starts[0],s)) 
+    sStart = sStarts[0]
+    _, chemin = Ford_Bellman(graphe,sStart)
+    for sEnd in sEnds:
+        trace = tracer_Chemin(graphe,sStart,sEnd,chemin)
+        if trace[0] == start:
+            print(trace) 
             break
         
 # Type II : Chemin de start au plus tard
@@ -162,52 +176,67 @@ def type3(graphe,start,end):
 
 # Type IV : Plus court chemin
 def type4(graphe,start,end):
-    """Permet de calculer le chemin le plus rapide de Type IV"""
-    sommets, arcs = graphe[2], graphe[3]
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
+    Permet de calculer le chemin le plus rapide de Type IV
+    """
+    sommets = graphe[2]
+    sEnds = []
+    sStarts = []
 
     #recherche de l'emplacement des éléments de début et fin
-    tmp_dep = 0
-    done = False
-    tmp_arr = []
-    for i in sommets:
-        if i[0] == start and not done:
-            tmp_dep = sommets.index(i)
-            done = True
+    # tmp_dep = 0
+    # done = False
+    # tmp_arr = []
+    # for i in sommets:
+    #     if i[0] == start and not done:
+    #         tmp_dep = sommets.index(i)
+    #         done = True
 
-        if i[0] == end:
-            tmp_arr.append(sommets.index(i))
+    #     if i[0] == end:
+    #         tmp_arr.append(sommets.index(i))
 
-    id_dep, id_arr = tmp_dep, tmp_arr #emplacement des éléments de début et fin
-    sim_g = simple_graph(graphe) #le graphe dois etre déja conv ! il est ensuite convertie en une version plus simple
-    dist, che = Ford_Bellman(sim_g,id_dep)# On peu maintenant effectuer Ford-Bellman sur le graphe simplifié
+    # id_dep, id_arr = tmp_dep, tmp_arr #emplacement des éléments de début et fin
+    
+    for s in sommets:
+        if s[0] == end:
+            sEnds.append(s)
+        if s[0] == start and sStarts==[]:
+            sStarts.append(s)
+            
+    #sim_g = simple_graph(graphe) #le graphe dois etre déja conv ! il est ensuite convertie en une version plus simple
+    #dist, che = Ford_Bellman(sim_g,id_dep)# On peu maintenant effectuer Ford-Bellman sur le graphe simplifié
+    sStart = sStarts[0]
+    dist, chemin = Ford_Bellman(graphe,sStart)
 
     # on a maintenant besoin du point final parmis toute ses posibilitées( celle dans laquelle on est end/le jour d'end )
     m = float("Inf")
-    tmp = 0
-    for i in id_arr:
-        if m > dist[i]:
-            m = dist[i]
-            tmp = i
+    sEnd = None
+    for s in sEnds:
+        if m > dist[s[1]]:
+            m = dist[s[1]]
+            sEnd = s
 
-    # on retrace ensuite le chemin que l'on a effectuer en utilisant la propriété trouver pendant la première question
-    cur = tmp
-    chemin = [cur]
-    for i in range(len(sommets)):
-        if che[cur] == None:
-            break
-        chemin.append(che[cur])
-        cur = che[cur]
+    # # on retrace ensuite le chemin que l'on a effectuer en utilisant la propriété trouver pendant la première question
+    # cur = tmp
+    # chemin = [cur]
+    # for i in range(len(sommets)):
+    #     if che[cur] == None:
+    #         break
+    #     chemin.append(che[cur])
+    #     cur = che[cur]
 
-    chemin.reverse()
+    # chemin.reverse()
+    
+    trace = tracer_Chemin(graphe,start,sEnd,chemin)
 
     #affichage des resultats
-    res = min([dist[i] for i in id_arr])
+    res = min([dist[sommets.index(s)] for s in sEnds])
     if res == float("Inf"):
         print("il n'y a pas de moyen d'atteindre " + end + " depuis " + start)
     else:
         print("Le chemin le plus rapide de Type4 de "+ start +" à " +end + " est", end =" ")
-        for p in chemin:
-            print(sommets[p], end =" ")
+        print(trace, end =" ")
         print("avec une distance de "+ str(res))
 
 

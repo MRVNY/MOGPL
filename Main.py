@@ -182,7 +182,7 @@ def conv_graphe(graphe):
 #print(chemin_plus_rapide(conv_graphe(fichier("graphe_complexe.txt")),"A","G"))
 #print(Ford_Bellman(simple_graph(conv_graphe(fichier("graphe_complexe.txt"))),0))
 
-#aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
+#aff_graphe((conv_graphe(fichier("graphe.txt"))))
 #print(conv_graphe(fichier("graphe.txt")))
 
 type4(conv_graphe(fichier("graphe.txt")),"A","F")
