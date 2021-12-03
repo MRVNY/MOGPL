@@ -140,7 +140,6 @@ def simple_graph(G):
 def type1(graphe,start,end):
     """
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
-    on cherche le sommet de y, avec la plus petit chiffre
     """
     sommets = graphe[2]
     sEnds = []
@@ -152,27 +151,57 @@ def type1(graphe,start,end):
             sStarts.append(s)
 
     sStart = sStarts[0]
-    _, chemin = Ford_Bellman(graphe,sStart)
+    dist, chemin = Ford_Bellman(graphe,sStart)
     for sEnd in sEnds:
-        trace = tracer_Chemin(graphe,sStart,sEnd,chemin)
-        if trace[0] == start:
-            print(trace) 
-            break
+        if dist[sommets.index(s)] != float("Inf"):
+            print("type1: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", arriver plus tôt: jour",sEnd[1])
+            return
         
 # Type II : Chemin de start au plus tard
 def type2(graphe,start,end):
-    """on cherche le sommet de x, avec la plus grand chiffre"""
-
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
+    """
+    sommets = graphe[2]
+    iEnds = []
+    sStarts = []
+    for s in sommets:
+        if s[0] == end:
+            iEnds.append(sommets.index(s))
+        if s[0] == start:
+            sStarts.append(s)
+            
+    sStarts.reverse()
+    for sStart in sStarts: 
+        dist, chemin = Ford_Bellman(graphe,sStart)
+        for i in iEnds:
+            if dist[i] != float("Inf"):
+                sEnd = sommets[i]
+                print("type2: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", partir plus tard: jour",sStart[1])
+                return
+    
 # Type III : Chemin le plus rapide
 def type3(graphe,start,end):
     """
-    On cherche tous les sommets de x et on les met dans X
-    On cherche tous les sommets de y et on les met dans Y
-
-    pour chaque sommet dans X:
-        On suit les chemins jusqu'a où atteint un sommet de Y, on les met dans une liste C, sinon on abandonne, 
-    On compare dans C la plus petite difference entre le chiffre de la fin et le chiffre du depart
+    (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
     """
+    sommets = graphe[2]
+    iEnds = []
+    sStarts = []
+    for s in sommets:
+        if s[0] == end:
+            iEnds.append(sommets.index(s))
+        if s[0] == start:
+            sStarts.append(s)
+            
+    sStarts.reverse()
+    for sStart in sStarts: 
+        dist, chemin = Ford_Bellman(graphe,sStart)
+        for i in iEnds:
+            if dist[i] != float("Inf"):
+                sEnd = sommets[i]
+                print("type3: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", Chemin le plus rapide: jour",sStart[1], " - jour",sEnd[1])
+                return
 
 # Type IV : Plus court chemin
 def type4(graphe,start,end):
