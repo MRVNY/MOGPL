@@ -185,4 +185,5 @@ def conv_graphe(graphe):
 #aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
 #print(conv_graphe(fichier("graphe.txt")))
 
+type4(conv_graphe(fichier("graphe.txt")),"A","F")
 type1(conv_graphe(fichier("graphe.txt")),"A","F")

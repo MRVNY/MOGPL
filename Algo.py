@@ -60,7 +60,8 @@ def Ford_Bellman(G,source):
         if distance[a] != float("Inf") and distance[a] + c < distance[b]:
             print("Le graphe contient un circuit absorbant")
             return
-    
+        
+    print(chemin)
     return distance, chemin
 
 def if_Existe_Chemin(graphe,start,end):
@@ -68,7 +69,7 @@ def if_Existe_Chemin(graphe,start,end):
     (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
     verifier s'il existe un chemin entre start et end
     """
-    _, arcs = graphe[2], graphe[3]
+    arcs = graphe[3]
     todo = [start]
     
     while todo != []:
@@ -87,7 +88,7 @@ def chercher_Chemin(graphe, start, end):
     nb_sommets, _, sommets, arcs = graphe
     distance = [float("Inf")] * nb_sommets
     distance[start[1]] = 0
-    chemin = [""] * nb_sommets
+    chemin = [None] * nb_sommets
 
     for _ in range(nb_sommets - 1):
         for sFrom, sTo, sDist in arcs:
@@ -95,12 +96,18 @@ def chercher_Chemin(graphe, start, end):
             numTo = sommets.index(sTo)
             if distance[numFrom] != float("Inf") and distance[numFrom] + sDist < distance[numTo]:
                 distance[numTo] = distance[numFrom] + sDist
-                chemin[numTo] = sTo[0]
+                chemin[numTo] = sFrom
                 if sTo == end:
-                    out = []
-                    for s in chemin:
-                        if s != "" and s not in out:
-                            out.append(s)
+                    print(chemin)
+                    tmp = end
+                    out = [tmp[0]]
+                    while tmp != None:
+                        if out[-1] != tmp[0]: 
+                            out.append(tmp[0])
+                        tmp = chemin[sommets.index(tmp)]
+                    if out[-1] != start[0]: 
+                        out.append(start[0])
+                    out.reverse()
                     return out
     return []
     
