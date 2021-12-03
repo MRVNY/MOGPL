@@ -64,9 +64,45 @@ def Ford_Bellman(G,source):
     return distance, chemin
 
 def if_Existe_Chemin(graphe,start,end):
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
+    verifier s'il existe un chemin entre start et end
+    """
+    _, arcs = graphe[2], graphe[3]
+    todo = [start]
     
-    return True
+    while todo != []:
+        tmp = todo.pop()
+        for sFrom, sTo, _ in arcs:
+            if sTo == end:
+                return True
+            if sFrom==tmp:
+                todo.append(sTo)
+    return False
     
+def chercher_Chemin(graphe, start, end):
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
+    """
+    nb_sommets, _, sommets, arcs = graphe
+    distance = [float("Inf")] * nb_sommets
+    distance[start[1]] = 0
+    chemin = [""] * nb_sommets
+
+    for _ in range(nb_sommets - 1):
+        for sFrom, sTo, sDist in arcs:
+            numFrom = sommets.index(sFrom)
+            numTo = sommets.index(sTo)
+            if distance[numFrom] != float("Inf") and distance[numFrom] + sDist < distance[numTo]:
+                distance[numTo] = distance[numFrom] + sDist
+                chemin[numTo] = sTo[0]
+                if sTo == end:
+                    out = []
+                    for s in chemin:
+                        if s != "" and s not in out:
+                            out.append(s)
+                    return out
+    return []
     
 def simple_graph(G):
     """Permet de simplifier les graphiques ( convertir les sommets en entier) """
@@ -84,9 +120,24 @@ def simple_graph(G):
 
 # Type I : Chemin d’ende au plus tôt
 def type1(graphe,start,end):
-    """on cherche le sommet de y, avec la plus petit chiffre"""
-    return 0
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
+    on cherche le sommet de y, avec la plus petit chiffre
+    """
+    sommets, arcs = graphe[2], graphe[3]
+    ends = []
+    starts = []
+    for s in sommets:
+        if s[0] == end:
+            ends.append(s)
+        if s[0] == start and starts==[]:
+            starts.append(s)
 
+    for s in ends:
+        if if_Existe_Chemin(graphe,starts[0],s):
+            print(chercher_Chemin(graphe,starts[0],s)) 
+            break
+        
 # Type II : Chemin de start au plus tard
 def type2(graphe,start,end):
     """on cherche le sommet de x, avec la plus grand chiffre"""
