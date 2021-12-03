@@ -11,10 +11,10 @@ def alph(s):
         if i[0] == debut:
             tmp = sommet.index(i)
             break
-    som_courant = sommet[tmp]
+    sommets_courant = sommet[tmp]
 
     #tant que l'on arrive pas à la fin on passe a l'arc suivant      
-    return CPR(arc,sommet,som_courant,arrive)
+    return CPR(arc,sommet,sommets_courant,arrive)
 
 def CPR(arc,sommet,current,arr):
     if current[0] == arr:
@@ -42,15 +42,15 @@ def CPR(arc,sommet,current,arr):
 def Ford_Bellman(G,source):
     """
     Algorithme de Ford Bellman
-    Attention source est l'indice dans arc de notre point de départ
+    Attention source est l'indice dans arc de notre point de start
     """
-    nb_som, nb_arc, sommet, arc = G
-    distance = [float("Inf")] * nb_som
+    nb_sommets, nb_arc, sommet, arc = G
+    distance = [float("Inf")] * nb_sommets
     distance[source] = 0
-    chemin = [None] * nb_som
+    chemin = [None] * nb_sommets
     chemin[source] = None
 
-    for _ in range(nb_som - 1):
+    for _ in range(nb_sommets - 1):
         for a, b, c in arc:
             if distance[a] != float("Inf") and distance[a] + c < distance[b]:
                 distance[b] = distance[a] + c
@@ -62,27 +62,32 @@ def Ford_Bellman(G,source):
             return
     
     return distance, chemin
+
+def if_Existe_Chemin(graphe,start,end):
+    
+    return True
+    
     
 def simple_graph(G):
     """Permet de simplifier les graphiques ( convertir les sommets en entier) """
-    nb_som, nb_arc, sommet, arc = G
+    nb_sommets, nb_arc, sommet, arc = G
 
-    sommet_simple = [0] * nb_som
+    sommet_simple = [0] * nb_sommets
     arc_simple = [0] * nb_arc
 
-    for i in range(nb_som):
+    for i in range(nb_sommets):
         sommet_simple[i] = i
     
     for i in range(nb_arc):
         arc_simple[i] = (sommet.index(arc[i][0]),sommet.index(arc[i][1]),arc[i][2])
-    return [nb_som,nb_arc,sommet_simple,arc_simple]
+    return [nb_sommets,nb_arc,sommet_simple,arc_simple]
 
-# Type I : Chemin d’arrivée au plus tôt
+# Type I : Chemin d’ende au plus tôt
 def type1(graphe,start,end):
     """on cherche le sommet de y, avec la plus petit chiffre"""
     return 0
 
-# Type II : Chemin de départ au plus tard
+# Type II : Chemin de start au plus tard
 def type2(graphe,start,end):
     """on cherche le sommet de x, avec la plus grand chiffre"""
 
@@ -98,27 +103,27 @@ def type3(graphe,start,end):
     """
 
 # Type IV : Plus court chemin
-def type4(graphe,départ,arrivé):
+def type4(graphe,start,end):
     """Permet de calculer le chemin le plus rapide de Type IV"""
-    som, arc = graphe[2], graphe[3]
+    sommets, arcs = graphe[2], graphe[3]
 
     #recherche de l'emplacement des éléments de début et fin
-    tmp1 = 0
+    tmp_dep = 0
     done = False
-    tmp2 = []
-    for i in som:
-        if i[0] == départ and not done:
-            tmp1 = som.index(i)
+    tmp_arr = []
+    for i in sommets:
+        if i[0] == start and not done:
+            tmp_dep = sommets.index(i)
             done = True
 
-        if i[0] == arrivé:
-            tmp2.append(som.index(i))
+        if i[0] == end:
+            tmp_arr.append(sommets.index(i))
 
-    id_dep, id_arr = tmp1, tmp2 #emplacement des éléments de début et fin
+    id_dep, id_arr = tmp_dep, tmp_arr #emplacement des éléments de début et fin
     sim_g = simple_graph(graphe) #le graphe dois etre déja conv ! il est ensuite convertie en une version plus simple
     dist, che = Ford_Bellman(sim_g,id_dep)# On peu maintenant effectuer Ford-Bellman sur le graphe simplifié
 
-    # on a maintenant besoin du point final parmis toute ses posibilitées( celle dans laquelle on est arrivé/le jour d'arrivée )
+    # on a maintenant besoin du point final parmis toute ses posibilitées( celle dans laquelle on est end/le jour d'end )
     m = float("Inf")
     tmp = 0
     for i in id_arr:
@@ -129,7 +134,7 @@ def type4(graphe,départ,arrivé):
     # on retrace ensuite le chemin que l'on a effectuer en utilisant la propriété trouver pendant la première question
     cur = tmp
     chemin = [cur]
-    for i in range(len(som)):
+    for i in range(len(sommets)):
         if che[cur] == None:
             break
         chemin.append(che[cur])
@@ -140,11 +145,11 @@ def type4(graphe,départ,arrivé):
     #affichage des resultats
     res = min([dist[i] for i in id_arr])
     if res == float("Inf"):
-        print("il n'y a pas de moyen d'atteindre " + arrivé + " depuis " + départ)
+        print("il n'y a pas de moyen d'atteindre " + end + " depuis " + start)
     else:
-        print("Le chemin le plus rapide de Type4 de "+ départ +" à " +arrivé + " est", end =" ")
+        print("Le chemin le plus rapide de Type4 de "+ start +" à " +end + " est", end =" ")
         for p in chemin:
-            print(som[p], end =" ")
+            print(sommets[p], end =" ")
         print("avec une distance de "+ str(res))
 
 
