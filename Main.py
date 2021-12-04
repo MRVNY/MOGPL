@@ -184,8 +184,11 @@ def conv_graphe(graphe):
 
 #aff_graphe((conv_graphe(fichier("graphe.txt"))))
 #print(conv_graphe(fichier("graphe.txt")))
-
+"""
+type1(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+type2(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+type3(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")"""
+#aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
 type1(conv_graphe(fichier("graphe.txt")),"A","F")
-type2(conv_graphe(fichier("graphe.txt")),"A","F")
-type3(conv_graphe(fichier("graphe.txt")),"A","F")
-type4(conv_graphe(fichier("graphe.txt")),"A","F")
+conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")

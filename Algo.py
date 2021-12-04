@@ -136,7 +136,7 @@ def simple_graph(G):
         arc_simple[i] = (sommet.index(arc[i][0]),sommet.index(arc[i][1]),arc[i][2])
     return [nb_sommets,nb_arc,sommet_simple,arc_simple]
 
-# Type I : Chemin d’ende au plus tôt
+# Type I : Chemin d’end au plus tôt
 def type1(graphe,start,end):
     """
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
