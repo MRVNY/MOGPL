@@ -154,7 +154,7 @@ def type1(graphe,start,end):
     dist, chemin = Ford_Bellman(graphe,sStart)
     for sEnd in sEnds:
         if dist[sommets.index(s)] != float("Inf"):
-            print("type1: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", arriver plus tôt: jour",sEnd[1])
+            print("typeI: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", arriver plus tôt: jour",sEnd[1])
             return
         
 # Type II : Chemin de start au plus tard
@@ -177,7 +177,7 @@ def type2(graphe,start,end):
         for i in iEnds:
             if dist[i] != float("Inf"):
                 sEnd = sommets[i]
-                print("type2: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", partir plus tard: jour",sStart[1])
+                print("typeII: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", partir plus tard: jour",sStart[1])
                 return
     
 # Type III : Chemin le plus rapide
@@ -200,7 +200,7 @@ def type3(graphe,start,end):
         for i in iEnds:
             if dist[i] != float("Inf"):
                 sEnd = sommets[i]
-                print("type3: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", Chemin le plus rapide: jour",sStart[1], " - jour",sEnd[1])
+                print("typeIII: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", Chemin le plus rapide: jour",sStart[1], " - jour",sEnd[1])
                 return
 
 # Type IV : Plus court chemin
@@ -264,7 +264,7 @@ def type4(graphe,start,end):
     if res == float("Inf"):
         print("il n'y a pas de moyen d'atteindre " + end + " depuis " + start)
     else:
-        print("Le chemin le plus rapide de Type4 de "+ start +" à " +end + " est", end =" ")
+        print("Le chemin le plus rapide de TypeIV de "+ start +" à " +end + " est", end =" ")
         print(trace, end =" ")
         print("avec une distance de "+ str(res))
 

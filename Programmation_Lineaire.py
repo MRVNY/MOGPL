@@ -70,15 +70,12 @@ def conversion_PL(graphe,start,end):
     chemin = [j for j in colonnes if x[j].x!=0]
     chemin.insert(0,sommets.index(sStart))
     for i in range(len(chemin)):
-        print(chemin[i])
         chemin[i] = sommets[chemin[i]][0]
 
-    print(chemin)
 
-
-    print("")                
-    print('Solution optimale:')
-    for j in colonnes:
-        print('x%d'%(j+1), '=', x[j].x)
-    print("")
-    print('Valeur de la fonction objectif :', m.objVal)
+    if m.objVal == float("Inf"):
+        print("\nil n'y a pas de moyen d'atteindre " + end + " depuis " + start+ "\n")
+    else:
+        print("\nLe chemin le plus rapide de TypeIV convertie de programme linéaire de "+ start +" à " +end + " est", end =" ")
+        print(np.unique(np.array(chemin)).tolist(), end =" ")
+        print("avec une distance de "+ str(int(m.objVal)) + "\n")

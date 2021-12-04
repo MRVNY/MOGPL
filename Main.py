@@ -190,5 +190,6 @@ type2(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
 type3(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
 type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")"""
 #aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
-type1(conv_graphe(fichier("graphe.txt")),"A","F")
 conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
+
+graphe = menu()
