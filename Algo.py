@@ -65,13 +65,18 @@ def CPR(arc,sommet,current,arr):
 
 def Ford_Bellman(graphe, sStart):
     """
+    Algo de Bellman
     (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
+    graphe(nb_sommets,nb_arc,[sommet],[arc]
+    arc(sommet,sommet,int)
+    sommet(str,int)
     """
     nb_sommets, _, sommets, arcs = graphe
     distance = [float("Inf")] * nb_sommets
     distance[sommets.index(sStart)] = 0
     chemin = [None] * nb_sommets
 
+    #Construire le tableau vu en cours, et le condenser dans une liste (les chemins sont tous gardés)
     for _ in range(nb_sommets - 1):
         for sFrom, sTo, sDist in arcs:
             numFrom = sommets.index(sFrom)
@@ -79,7 +84,8 @@ def Ford_Bellman(graphe, sStart):
             if distance[numFrom] != float("Inf") and distance[numFrom] + sDist < distance[numTo]:
                 distance[numTo] = distance[numFrom] + sDist
                 chemin[numTo] = sFrom
-                
+    
+    #On verifie s'il existe un circuit absorbant
     for sFrom, sTo, sDist in arcs:
         numFrom = sommets.index(sFrom)
         numTo = sommets.index(sTo)
@@ -90,14 +96,22 @@ def Ford_Bellman(graphe, sStart):
                 
     
 def tracer_Chemin(graphe,sStart,sEnd,chemin):
+    """
+    tracer le chemin de sStart à sEnd selon le Bellman
+    graphe, sommet, sommet -> bool
+    """
     sommets = graphe[2]
     tmp = sEnd
     out = [tmp[0]]
     
+    #on part de la fin, lors qu'on n'ateint pas le debut(None), on continue le while
     while tmp != None:
+        #On garde qu'une seule fois le sommet, cad (A,1)->(A,2) = A
         if out[-1] != tmp[0]: 
             out.append(tmp[0])
         tmp = chemin[sommets.index(tmp)]
+        
+    #Si le debut n'est pas la fin (None empeche le dernier sommet a etre ajouté), on le rajoute manuellement
     if out[-1] != sStart[0]: 
         out.append(sStart[0])
     out.reverse()
@@ -142,16 +156,22 @@ def type1(graphe,start,end):
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
     """
     sommets = graphe[2]
+    
+    #Sommets du debut et de la fin à traiter, déjà triés
     sEnds = []
     sStarts = []
     for s in sommets:
         if s[0] == end:
             sEnds.append(s)
+        #On garde le premier debut, Parce qu'on peut en aller partout et on distingue pas les debut
         if s[0] == start and sStarts==[]:
             sStarts.append(s)
 
+    #Bellman
     sStart = sStarts[0]
     dist, chemin = Ford_Bellman(graphe,sStart)
+    
+    #Trouver S'il existe un chemin, le premier sera le plus petit (puisque déjà trié), et donc sera le resultat
     for sEnd in sEnds:
         if dist[sommets.index(s)] != float("Inf"):
             print("typeI: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", arriver plus tôt: jour",sEnd[1])
@@ -163,19 +183,23 @@ def type2(graphe,start,end):
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
     """
     sommets = graphe[2]
-    iEnds = []
+    
+    #Sommets du debut et de la fin à traiter, déjà triés
+    #Ici on garde les debuts parce qu'il faut distinguer les debuts, mais on ne garde que la derniere fin
+    iEnds = [None]
     sStarts = []
     for s in sommets:
         if s[0] == end:
-            iEnds.append(sommets.index(s))
+            iEnds[0] = sommets.index(s)
         if s[0] == start:
             sStarts.append(s)
-            
-    sStarts.reverse()
+    
+    #Bellman sur chaque sommets de debut 
+    sStarts.reverse() #parce que le plus grand est le meilleur
     for sStart in sStarts: 
         dist, chemin = Ford_Bellman(graphe,sStart)
         for i in iEnds:
-            if dist[i] != float("Inf"):
+            if dist[i] != float("Inf"): #S'il existe un chemin du premier debut à n'inporte quelle fin, on arrete
                 sEnd = sommets[i]
                 print("typeII: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", partir plus tard: jour",sStart[1])
                 return
@@ -186,6 +210,8 @@ def type3(graphe,start,end):
     (int,int,[(str,int)],[(str,int),(str,int),int]), str, str -> [str]
     """
     sommets = graphe[2]
+    
+    #Ici on garde tous les debuts et fin parce qu'il faut distinguer les 2
     iEnds = []
     sStarts = []
     for s in sommets:
@@ -193,12 +219,13 @@ def type3(graphe,start,end):
             iEnds.append(sommets.index(s))
         if s[0] == start:
             sStarts.append(s)
-            
+       
+    #Bellman     
     sStarts.reverse()
     for sStart in sStarts: 
         dist, chemin = Ford_Bellman(graphe,sStart)
         for i in iEnds:
-            if dist[i] != float("Inf"):
+            if dist[i] != float("Inf"): #S'il existe un chemin du premier debut à la premiere fin, on arrete
                 sEnd = sommets[i]
                 print("typeIII: ",tracer_Chemin(graphe,sStart,sEnd,chemin), ", Chemin le plus rapide: jour",sStart[1], " - jour",sEnd[1])
                 return

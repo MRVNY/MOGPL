@@ -4,7 +4,7 @@ import numpy as np
 
 def conversion_PL(graphe,start,end):
     """Permet de trouver le chemin le plus court en convertissant le graphe d'entrée en un programme linéaire"""
-    nb_som, nb_arc, _, arc = simple_graph(graphe)
+    nb_som, nb_arc, sommets, arc = graphe
 
     sommets = graphe[2]
     sEnds = []
@@ -30,8 +30,8 @@ def conversion_PL(graphe,start,end):
     a = []
     for i in range(nbcont):
         c = [0] * nbvar
-        c[arc[i][0]] = -1
-        c[arc[i][1]] = 1
+        c[sommets.index(arc[i][0])] = -1
+        c[sommets.index(arc[i][1])] = 1
         a.append(c)
 
     # Second membre LES VALEURS DES ARC
@@ -42,7 +42,7 @@ def conversion_PL(graphe,start,end):
     c[sommets.index(sStart)] = -1
     c[sommets.index(sEnds[0])] = 1
 
-
+    print(a,b,c)
     m = Model("mogplex")     
             
     # declaration variables de decision
@@ -57,6 +57,8 @@ def conversion_PL(graphe,start,end):
     obj =0
     for j in colonnes:
         obj += c[j] * x[j]
+        
+    print(c,x)
             
     # definition de l'objectif
     m.setObjective(obj,GRB.MAXIMIZE)
@@ -80,4 +82,6 @@ def conversion_PL(graphe,start,end):
         print("\nLe chemin le plus rapide de TypeIV convertie de programme linéaire de "+ start +" à " +end + " est", end =" ")
         print(np.unique(np.array(chemin)).tolist(), end =" ")
         print("avec une distance de "+ str(int(m.objVal)) + "\n")
+    
+    
     
