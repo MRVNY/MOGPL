@@ -3,6 +3,7 @@ from Algo import simple_graph
 import numpy as np
 
 def conversion_PL(graphe,start,end):
+    """Permet de trouver le chemin le plus court en convertissant le graphe d'entrée en un programme linéaire"""
     nb_som, nb_arc, _, arc = simple_graph(graphe)
 
     sommets = graphe[2]
@@ -79,3 +80,4 @@ def conversion_PL(graphe,start,end):
         print("\nLe chemin le plus rapide de TypeIV convertie de programme linéaire de "+ start +" à " +end + " est", end =" ")
         print(np.unique(np.array(chemin)).tolist(), end =" ")
         print("avec une distance de "+ str(int(m.objVal)) + "\n")
+    

@@ -3,7 +3,7 @@ import sys
 import graphviz
 import re
 from Affichage import aff_graphe
-from Generate import generate_graphe
+from Generate import generate_graphe, generate_graphe_arcs, generate_graphe_sommets
 from Algo import * 
 from Programmation_Lineaire import conversion_PL
 
@@ -203,3 +203,5 @@ def main():
 #conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
 
 main()
+
+
