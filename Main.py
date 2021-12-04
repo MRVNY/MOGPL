@@ -178,16 +178,16 @@ def main():
 #parser()
 #print(conv_graphe(fichier("graphe.txt")))
 #génere un graphe aléatoire 
-#graphe_aléatoire = generate_graphe()
+#graphe_aleatoire = generate_graphe()
 
 #ATTENTION ! Ne fonctionne pas sans Graphviz
 #aff_graphe(fichier("graphe_complexe.txt"))
 #aff_graphe(conv_graphe(fichier("graphe.txt")))
 #aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
 
-#print(graphe_aléatoire)
-#aff_graphe(graphe_aléatoire)
-#aff_graphe(conv_graphe(graphe_aléatoire))
+#print(graphe_aleatoire[2])
+#aff_graphe(graphe_aleatoire)
+#aff_graphe(conv_graphe(graphe_aleatoire))
 
 #print(chemin_plus_rapide(conv_graphe(fichier("graphe_complexe.txt")),"A","G"))
 #print(Ford_Bellman(simple_graph(conv_graphe(fichier("graphe_complexe.txt"))),0))
@@ -195,12 +195,12 @@ def main():
 #aff_graphe((conv_graphe(fichier("graphe.txt"))))
 #print(conv_graphe(fichier("graphe.txt")))
 
-#type1(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-#type2(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-#type3(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-#type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+# type1(conv_graphe(graphe_aleatoire),"A",graphe_aleatoire[2][-1][0])
+# type2(conv_graphe(graphe_aleatoire),"A",graphe_aleatoire[2][-1][0])
+# type3(conv_graphe(graphe_aleatoire),"A",graphe_aleatoire[2][-1][0])
+# type4(conv_graphe(graphe_aleatoire),"A",graphe_aleatoire[2][-1][0])
 #aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
-conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
+#conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
 
 #main()
 
