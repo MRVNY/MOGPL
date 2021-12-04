@@ -156,7 +156,17 @@ def conv_graphe(graphe):
 
     return (len(sommet_prime),len(arc_prime),sommet_prime,arc_prime)
 
-################################# ALGORITHME DE CALCUL #################################
+def main():
+    graphe = menu()
+    print("Maintenant vous allez pouvoir entrer deux sommets pour chercher les chemins :")
+    start = str(input("Partir de : "))
+    end = str(input("Et Finir en :"))
+
+    type1(conv_graphe(graphe),start,end)
+    type2(conv_graphe(graphe),start,end)
+    type3(conv_graphe(graphe),start,end)
+    type4(conv_graphe(graphe),start,end)
+    conversion_PL(conv_graphe(graphe),start,end)
 
 
 
@@ -184,12 +194,12 @@ def conv_graphe(graphe):
 
 #aff_graphe((conv_graphe(fichier("graphe.txt"))))
 #print(conv_graphe(fichier("graphe.txt")))
-"""
-type1(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-type2(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-type3(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
-type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")"""
-#aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
-conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
 
-graphe = menu()
+#type1(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+#type2(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+#type3(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+#type4(conv_graphe(fichier("graphe_complexe.txt")),"A","Z")
+#aff_graphe(simple_graph(conv_graphe(fichier("graphe.txt"))))
+#conversion_PL(conv_graphe(fichier("graphe.txt")),"A","F")
+
+main()
