@@ -190,7 +190,7 @@ def test_sommets_guroby():
     _, ax = plt.subplots()  
     ax.plot(ite, res)  
     ax.set_xlabel('Nombre de sommets')  
-    ax.set_ylabel('Temps d\'exécution') 
+    ax.set_ylabel('Temps d\'exécution (en seconde)') 
     ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de Sommets")  
     plt.show()
 
@@ -199,9 +199,9 @@ def test_sommets_guroby():
 def test_arcs_guroby():
     filename = "test_arcs.txt"
     fichier = open(filename,'w')
-    ite = [i for i in range(100,4010,10)]
+    ite = [i for i in range(100,2010,10)]
     res = []
-    for i in range(100,4010,10):
+    for i in range(100,2010,10):
         g = generate_graphe_arcs(i)
         start, end = g[2][0], g[2][-1]
         ts = time.time()
@@ -214,7 +214,7 @@ def test_arcs_guroby():
     _, ax = plt.subplots()  
     ax.plot(ite, res)  
     ax.set_xlabel('Nombre d\'arc')  
-    ax.set_ylabel('Temps d\'exécution') 
+    ax.set_ylabel('Temps d\'exécution (en seconde)') 
     ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de d\'Arc")  
     plt.show()
 
