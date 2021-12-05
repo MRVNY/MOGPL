@@ -56,7 +56,7 @@ def generate_graphe_arcs(nbarcs):
     for i in range(nbarcs):
         s1 = random.randint(0,24)
         s2 = random.randint(s1,25)
-        arcs.append((sommets[s1],sommets[s2],1,1)) # On cherche pas a vor l'influence des etiquette donc on les mets toutes a 1
+        arcs.append((sommets[s1],sommets[s2],i+1,1)) # On cherche pas a vor l'influence des etiquette donc on les mets toutes a 1
 
     return [nbsommets,nbarcs,sommets,arcs]
 
