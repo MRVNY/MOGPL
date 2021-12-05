@@ -193,9 +193,7 @@ def type4(graphe,start,end):
             sStarts.append(s)
             
     sStart = sStarts[0]
-    print(graphe,sStart)
     dist, chemin = Ford_Bellman(graphe,sStart)
-    #print(dist,chemin)
 
     # on a maintenant besoin du point final parmis toute ses posibilitées( celle dans laquelle on est end/le jour d'end )
     m = float("Inf")

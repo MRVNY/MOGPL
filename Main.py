@@ -220,53 +220,6 @@ def test_arcs_guroby():
 
     fichier.close()
 
-def test_sommets_typeIV():
-    filename = "test_sommets.txt"
-    fichier = open(filename,'w')
-    ite = [i for i in range(10,2010,10)]
-    res = []
-    for i in range(10,2010,10):
-        g = generate_graphe_sommets(i)
-        start, end = g[2][0], g[2][-1]
-        ts = time.time()
-        type4(conv_graphe(g),start,end)
-        te = time.time() - ts
-        fichier.writelines( str(te) + " \n")
-        #fichier.writelines("Pour " + str(i) + " sommets, temps d'execution (en seconde) : " + str(te) + " \n")
-        res.append(te)
-    _, ax = plt.subplots()  
-    ax.plot(ite, res)  
-    ax.set_xlabel('Nombre de sommets')  
-    ax.set_ylabel('Temps d\'exécution') 
-    ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de Sommets")  
-    plt.show()
-
-    fichier.close()
-
-def test_arcs_typeIV():
-    filename = "test_arcs.txt"
-    fichier = open(filename,'w')
-    ite = [i for i in range(100,4010,10)]
-    res = []
-    for i in range(100,4010,10):
-        g = generate_graphe_arcs(i)
-        start, end = g[2][0], g[2][-1]
-        ts = time.time()
-        type4(conv_graphe(g),start,end)
-        te = time.time() - ts
-        fichier.writelines( str(te) + " \n")
-        #fichier.writelines("Pour " + str(i) + " arcs, temps d'execution (en seconde) : " + str(te) + " \n")
-        res.append(te)
-    
-    _, ax = plt.subplots()  
-    ax.plot(ite, res)  
-    ax.set_xlabel('Nombre d\'arc')  
-    ax.set_ylabel('Temps d\'exécution') 
-    ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de d\'Arc")  
-    plt.show()
-
-    fichier.close()
-
 
 ################################# MAIN #################################
 
@@ -301,5 +254,4 @@ def test_arcs_typeIV():
 
 #main()
 
-test_sommets_typeIV()
-#test_arcs_typeIV()
+test_arcs_guroby()
