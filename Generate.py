@@ -1,6 +1,7 @@
 import random
 
 def generate_graphe():
+    """renvoie un graphe avec des sommets et des arcs aléatoires"""
     nb_sommet = random.randint(10,27) 
     a = []
     for i in range(nb_sommet-1):
@@ -30,6 +31,7 @@ def generate_graphe():
 
 
 def generate_graphe_sommets(nbsommets):
+    """renvoie un graphe avec le nombre de sommet donné"""
     sommets = []
     arcs = []
 
@@ -45,6 +47,7 @@ def generate_graphe_sommets(nbsommets):
 
 
 def generate_graphe_arcs(nbarcs):
+    """renvoie un graphe avec le nombre de d'arc donné"""
     sommets = []
     arcs = []
 

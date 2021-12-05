@@ -176,9 +176,9 @@ def main():
 def test_sommets_guroby():
     filename = "test_sommets.txt"
     fichier = open(filename,'w')
-    ite = [i for i in range(10,2010,10)]
+    ite = [i for i in range(10,1010,10)]
     res = []
-    for i in range(10,2010,10):
+    for i in range(10,1010,10):
         g = generate_graphe_sommets(i)
         start, end = g[2][0], g[2][-1]
         ts = time.time()
@@ -195,6 +195,9 @@ def test_sommets_guroby():
     plt.show()
 
     fichier.close()
+
+    return ite, res
+
 
 def test_arcs_guroby():
     filename = "test_arcs.txt"
@@ -219,6 +222,31 @@ def test_arcs_guroby():
     plt.show()
 
     fichier.close()
+
+def test_sommets_typeIV():
+    filename = "test_sommets.txt"
+    fichier = open(filename,'w')
+    ite = [i for i in range(10,1010,10)]
+    res = []
+    for i in range(10,1010,10):
+        g = generate_graphe_sommets(i)
+        start, end = g[2][0], g[2][-1]
+        ts = time.time()
+        type4(conv_graphe(g),start,end)
+        te = time.time() - ts
+        fichier.writelines( str(te) + " \n")
+        #fichier.writelines("Pour " + str(i) + " sommets, temps d'execution (en seconde) : " + str(te) + " \n")
+        res.append(te)
+    _, ax = plt.subplots()  
+    ax.plot(ite, res)  
+    ax.set_xlabel('Nombre de sommets')  
+    ax.set_ylabel('Temps d\'exécution (en seconde)') 
+    ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de Sommets")  
+    plt.show()
+
+    fichier.close()
+
+    return ite, res
 
 
 ################################# MAIN #################################
@@ -254,4 +282,13 @@ def test_arcs_guroby():
 
 #main()
 
-test_arcs_guroby()
+i1,r1 = test_sommets_guroby()
+i2,r2 = test_sommets_typeIV()
+
+_, ax = plt.subplots()  
+ax.plot(i1, r1,color = 'tab:blue',label = 'Fonction conversion_PL')  
+ax.plot(i2, r2,color = 'tab:orange',label = 'Fonction typeIV')  
+ax.set_xlabel('Nombre de sommets')  
+ax.set_ylabel('Temps d\'exécution (en seconde)') 
+ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de Sommets")  
+plt.show()

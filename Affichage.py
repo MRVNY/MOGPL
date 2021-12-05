@@ -6,6 +6,7 @@ import graphviz
 #l'installation de ce dernier.
 
 def aff_graphe(graphe):
+    """Permet d'afficher un graphique grâce a l'extention graphviz"""
     nb_som, nb_arc, sommet_prime, arc_prime = graphe
 
     f = graphviz.Digraph('G\'', filename='fsm.gv')
