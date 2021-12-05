@@ -40,7 +40,7 @@ def conversion_PL(graphe,start,end):
     # Coefficients de la fonction objectif
     c = [0] * nbvar
     c[sommets.index(sStart)] = -1
-    c[sommets.index(sEnds[0])] = 1
+    c[sommets.index(sEnds[-1])] = 1
 
     print(a,b,c)
     m = Model("mogplex")     
