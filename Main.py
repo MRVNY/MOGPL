@@ -176,9 +176,9 @@ def main():
 def test_sommets_guroby():
     filename = "test_sommets.txt"
     fichier = open(filename,'w')
-    ite = [i for i in range(10,1010,10)]
+    ite = [i for i in range(10,510,10)]
     res = []
-    for i in range(10,1010,10):
+    for i in range(10,510,10):
         g = generate_graphe_sommets(i)
         start, end = g[2][0], g[2][-1]
         ts = time.time()
@@ -226,9 +226,9 @@ def test_arcs_guroby():
 def test_sommets_typeIV():
     filename = "test_sommets.txt"
     fichier = open(filename,'w')
-    ite = [i for i in range(10,1010,10)]
+    ite = [i for i in range(10,510,10)]
     res = []
-    for i in range(10,1010,10):
+    for i in range(10,510,10):
         g = generate_graphe_sommets(i)
         start, end = g[2][0], g[2][-1]
         ts = time.time()
@@ -286,9 +286,10 @@ i1,r1 = test_sommets_guroby()
 i2,r2 = test_sommets_typeIV()
 
 _, ax = plt.subplots()  
-ax.plot(i1, r1,color = 'tab:blue',label = 'Fonction conversion_PL')  
-ax.plot(i2, r2,color = 'tab:orange',label = 'Fonction typeIV')  
+ax.plot(i1, r1,color = 'tab:blue', label = 'Fonction conversion_PL')  
+ax.plot(i2, r2,color = 'tab:orange', label = 'Fonction typeIV')  
 ax.set_xlabel('Nombre de sommets')  
 ax.set_ylabel('Temps d\'exécution (en seconde)') 
 ax.set_title("Temps de recherche du plus cours chemin en fonction du nombre de Sommets")  
+plt.legend()
 plt.show()
