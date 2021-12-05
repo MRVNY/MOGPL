@@ -43,19 +43,6 @@ def generate_graphe_sommets(nbsommets):
     
     return [nbsommets,nbarcs,sommets,arcs] 
 
-def generate_graphe_sommets(nbsommets):
-    sommets = []
-    arcs = []
-
-    nbarcs = nbsommets - 1 
-
-    for i in range(nbsommets):
-        sommets.append(chr(i%26 + 65) + str(int(i/26)))
-
-    for i in range(len(sommets)-1):
-        arcs.append((sommets[i],sommets[i+1],i+1,1))
-    
-    return [nbsommets,nbarcs,sommets,arcs]
 
 def generate_graphe_arcs(nbarcs):
     sommets = []
@@ -72,3 +59,5 @@ def generate_graphe_arcs(nbarcs):
         arcs.append((sommets[s1],sommets[s2],1,1)) # On cherche pas a vor l'influence des etiquette donc on les mets toutes a 1
 
     return [nbsommets,nbarcs,sommets,arcs]
+
+
