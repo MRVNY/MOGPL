@@ -62,7 +62,25 @@ def tracer_Chemin(graphe,sStart,sEnd,chemin):
     
     return out
 
+#n'est plus utilisée, remplacée par bellman
+def if_Existe_Chemin(graphe,start,end):
+    """
+    (int,int,[(str,int)],[(str,int),(str,int),int]), (str,int) , (str,int) -> bool
+    verifier s'il existe un chemin entre start et end
+    """
+    arcs = graphe[3]
+    todo = [start]
     
+    while todo != []:
+        tmp = todo.pop()
+        for sFrom, sTo, _ in arcs:
+            if sTo == end:
+                return True
+            if sFrom==tmp:
+                todo.append(sTo)
+    return False
+
+#n'est plus utilisée, remplacée par sommets.index()
 def simple_graph(G):
     """Permet de simplifier les graphiques ( convertir les sommets en entier) """
     nb_sommets, nb_arc, sommet, arc = G
