@@ -54,7 +54,7 @@ def tracer_Chemin(graphe,sStart,sEnd,chemin):
         if out[-1] != tmp[0]: 
             out.append(tmp[0])
         tmp = chemin[sommets.index(tmp)]
-        
+    
     #Si le debut n'est pas la fin (None empeche le dernier sommet a etre ajouté), on le rajoute manuellement
     if out[-1] != sStart[0]: 
         out.append(sStart[0])
@@ -183,38 +183,28 @@ def type4(graphe,start,end):
     Permet de calculer le chemin le plus rapide de Type IV
     """
     sommets = graphe[2]
-    sEnds = []
-    sStarts = []
+    sEnd = None
+    sStart = None
     
     for s in sommets:
         if s[0] == end:
-            sEnds.append(s)
-        if s[0] == start and sStarts==[]:
-            sStarts.append(s)
-            
-    sStart = sStarts[0]
-    print(graphe,sStart)
-    dist, chemin = Ford_Bellman(graphe,sStart)
-    #print(dist,chemin)
-
-    # on a maintenant besoin du point final parmis toute ses posibilitées( celle dans laquelle on est end/le jour d'end )
-    m = float("Inf")
-    sEnd = None
-    for s in sEnds:
-        if m > dist[s[1]]:
-            m = dist[s[1]]
             sEnd = s
+        if s[0] == start and sStart==None:
+            sStart = s
+    
+    #Bellman
+    dist, chemin = Ford_Bellman(graphe,sStart)
 
     # on retrace ensuite le chemin que l'on a effectuer en utilisant la propriété trouver pendant la première question
     trace = tracer_Chemin(graphe,sStart,sEnd,chemin)
+    
+    if len(trace)-1 != dist[sommets.index(sEnd)]:
+        print("il n'y a pas de moyen d'atteindre " + end + " depuis " + start)
+        return
 
     #affichage des resultats
-    res = min([dist[sommets.index(s)] for s in sEnds])
-    if res == float("Inf"):
-        print("il n'y a pas de moyen d'atteindre " + end + " depuis " + start)
-    else:
-        print("Le chemin le plus rapide de TypeIV de "+ start +" à " +end + " est", end =" ")
-        print(trace, end =" ")
-        print("avec une distance de "+ str(res))
+    print("Le chemin le plus rapide de TypeIV de "+ start +" à " +end + " est", end =" ")
+    print(trace, end =" ")
+    print("avec une distance de "+ str(len(trace)-1))
 
 
